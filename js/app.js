@@ -20,10 +20,15 @@ function updateStats() {
 }
 
 btnAdd.addEventListener('click', () => {
-  if (!inputTask.value.trim()) return
+  const taskText = inputTask.value.trim()
+  if (!taskText) return
 
   const li = document.createElement('li')
-  li.append(inputTask.value)
+  
+  // Criando um span para o texto para melhor controle no CSS
+  const span = document.createElement('span')
+  span.innerText = taskText
+  li.appendChild(span)
 
   const btnCheck = document.createElement('button')
   btnCheck.className = 'check'
@@ -54,16 +59,19 @@ btnAdd.addEventListener('click', () => {
 })
 
 btnClearAll.addEventListener('click', () => {
-  list.innerHTML = ''
-  total = 0
-  updateStats()
+  if(confirm("Deseja realmente limpar todas as tarefas?")) {
+    list.innerHTML = ''
+    total = 0
+    updateStats()
+  }
 })
 
 const text = 'Duart Dev todos os direitos reservados.'
 let idx = 0
 function typeWriter() {
+  const footerElement = document.getElementById('footer-text')
   if (idx < text.length) {
-    document.getElementById('footer-text').innerHTML += text[idx++]
+    footerElement.innerHTML += text[idx++]
     setTimeout(typeWriter, 60)
   }
 }
@@ -71,7 +79,11 @@ typeWriter()
 
 btnDownload.addEventListener('click', () => {
   const data = [...list.children]
-    .map(li => `${li.classList.contains('done') ? '[✔]' : '[ ]'} ${li.childNodes[0].textContent}`)
+    .map(li => {
+      const isDone = li.classList.contains('done') ? '[✔]' : '[ ]'
+      const content = li.querySelector('span').innerText
+      return `${isDone} ${content}`
+    })
     .join('\n')
 
   if (!data) return alert('Sua lista está vazia!')
