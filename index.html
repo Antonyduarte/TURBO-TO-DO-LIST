@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-do Turbo</title>
   <link rel="shortcut icon" href="assets/favicon/To-do-list-website-icon.png" type="image/x-icon">
   <link rel="stylesheet" href="css/styles.css">
@@ -18,8 +19,10 @@
 
     <section class="controls">
       <input id="inputTask" type="text" placeholder="Digite uma tarefa..." autocomplete="off">
-      <button id="btnAdd" disabled>Adicionar</button>
-      <button id="btnClearAll" class="danger">Limpar tudo</button>
+      <div class="button-group">
+        <button id="btnAdd" disabled>Adicionar</button>
+        <button id="btnClearAll" class="danger">Limpar tudo</button>
+      </div>
       <p id="stats">0 tarefas</p>
     </section>
 
@@ -33,4 +36,3 @@
   <script src="js/app.js"></script>
 </body>
 </html>
-
