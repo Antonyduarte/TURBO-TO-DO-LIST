@@ -11,13 +11,15 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* Melhora a renderização de fontes em telas de alta densidade */
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
   width: 100%;
   max-width: 520px;
-  margin: auto;
-  padding: 40px 20px;
+  margin: 0 auto;
+  padding: 20px 16px;
 }
 
 header {
@@ -25,11 +27,12 @@ header {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  padding: 0 10px;
 }
 
 h1 {
-  font-size: 2.3rem;
+  font-size: clamp(1.8rem, 8vw, 2.3rem);
   font-weight: 900;
   letter-spacing: -1px;
 }
@@ -37,22 +40,20 @@ h1 {
 #btnDownload {
   position: absolute;
   right: 0;
-  top: 0;
   background: #ff9800;
   border: none;
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
   transition: 0.2s;
-}
-
-#btnDownload:hover {
-  transform: translateY(-4px);
-  background: #4b8df7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #btnDownload img {
   width: 20px;
+  height: 20px;
 }
 
 .controls {
@@ -64,17 +65,29 @@ h1 {
 
 input {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   border-radius: 10px;
-  border: none;
+  border: 2px solid transparent;
   background: #2a2a2a;
   color: #fff;
   font-size: 1rem;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+input:focus {
+  border-color: #4b8df7;
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 button {
-  padding: 12px 16px;
+  padding: 16px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
@@ -82,14 +95,17 @@ button {
   background: #4b8df7;
   color: #fff;
   transition: 0.2s;
+  font-size: 1rem;
+  /* Evita zoom automático no iOS ao focar campos */
+  touch-action: manipulation; 
 }
 
-button:hover {
-  opacity: 0.85;
+button:active {
+  transform: scale(0.98);
 }
 
 button:disabled {
-  opacity: 0.4;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
@@ -98,9 +114,10 @@ button:disabled {
 }
 
 #stats {
-  margin-top: 12px;
+  margin-top: 15px;
   text-align: center;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  opacity: 0.7;
 }
 
 ul {
@@ -110,7 +127,7 @@ ul {
 
 li {
   background: #202020;
-  padding: 14px;
+  padding: 16px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -120,23 +137,27 @@ li {
   animation: fadeIn 0.25s ease;
 }
 
+li span {
+  flex: 1;
+  font-size: 1rem;
+  word-break: break-word; /* Evita que textos longos quebrem o layout */
+}
+
 li.done {
   background: #1f3d1f;
   color: #caffca;
   text-decoration: line-through;
 }
 
-.check, .remove {
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+.check,
+.remove {
+  padding: 10px;
+  min-width: 44px; /* Tamanho mínimo recomendado para acessibilidade */
+  font-size: 0.9rem;
 }
 
 .check {
   background: #00c853;
-  margin-left: auto;
 }
 
 .remove {
@@ -144,19 +165,21 @@ li.done {
 }
 
 footer {
+  margin-top: auto;
   text-align: center;
-  padding: 15px;
-  font-size: 0.85rem;
+  padding: 20px;
+  font-size: 0.8rem;
   opacity: 0.6;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajustes finos para telas muito pequenas */
+@media (max-width: 380px) {
+  .app { padding: 15px 10px; }
+  h1 { font-size: 1.6rem; }
+  .button-group { grid-template-columns: 1fr; } /* Botões um embaixo do outro se for muito pequeno */
 }
